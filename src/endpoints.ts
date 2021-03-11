@@ -1,9 +1,9 @@
+import { iEndpoint } from "./interfaces/";
 import {
   UsersController,
   TypesController,
   AuthenticationController,
 } from "./controllers";
-import { iEndpoint } from "./interfaces/";
 
 const users = new UsersController();
 const types = new TypesController();
@@ -23,9 +23,5 @@ export const Endpoints: Array<iEndpoint> = [
   { url: "/types/:id", handdler: types.create, method: "PUT" },
   { url: "/types/:id", handdler: types.create, method: "DELETE" },
   // Authentication
-  {
-    url: "/authentication",
-    handdler: authentication.generateToken,
-    method: "POST",
-  },
+  { url: "/authentication", handdler: authentication.generateToken, method: "POST" },
 ];
