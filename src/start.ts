@@ -14,6 +14,9 @@ import { iEndpoint } from './interfaces'
         else if(endpoint.method === 'POST') app.post(endpoint.url, endpoint.handdler)
         else if(endpoint.method === 'PUT') app.put(endpoint.url, endpoint.handdler)
         else if(endpoint.method === 'DELETE') app.delete(endpoint.url, endpoint.handdler)
+        else {
+            throw new Error(`${endpoint.method} method is not allowed`)
+        }
     })
 
     app.listen(3000)
