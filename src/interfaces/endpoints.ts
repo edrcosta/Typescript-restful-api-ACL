@@ -2,6 +2,6 @@ import { Handler } from "express";
 
 export interface iEndpoint {
   url: string;
-  method: string;
+  method: "GET" | "POST" | "DELETE" | "PUT";
   handdler: Handler;
 }
