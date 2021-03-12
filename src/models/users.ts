@@ -1,4 +1,4 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { DataTypes, Model, Sequelize } from 'sequelize'
 
 export class UsersModel extends Model {
   static dataSchema = {
@@ -9,5 +9,5 @@ export class UsersModel extends Model {
     user_type_id: DataTypes.INTEGER,
     created: DataTypes.DATE,
     updated: DataTypes.DATE,
-  };
+  }
 }

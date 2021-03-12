@@ -1,4 +1,4 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from 'sequelize'
 
 export class UsersTypesModel extends Model {
   static dataSchema = {
@@ -7,5 +7,5 @@ export class UsersTypesModel extends Model {
     deleted: DataTypes.TINYINT,
     created: DataTypes.DATE,
     updated: DataTypes.DATE,
-  };
+  }
 }
