@@ -1,7 +1,12 @@
-export class ENV {
-  static initialize() {
-    const env = require('../../env.json')
+import { iEnv } from '../interfaces'
 
-    process.env.SERVER_PORT = env.SERVER_PORT || 3000
+export class ENV {
+  static initialize(): iEnv {
+    const envFile = require('../../env.json')
+
+    return {
+      SERVER_PORT: envFile.SERVER_PORT || 3000,
+      DATABASE_CONNECTION_STRING: envFile.DATABASE_CONNECTION_STRING || 'sqlite::memory:',
+    }
   }
 }
