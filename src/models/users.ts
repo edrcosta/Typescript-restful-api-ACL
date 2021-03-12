@@ -1,13 +1,49 @@
-import { DataTypes, Model, Sequelize } from 'sequelize'
+import { DataTypes, Model, Sequelize } from 'sequelize';
 
-export class UsersModel extends Model {
-  static dataSchema = {
-    name: DataTypes.STRING,
-    password_hash: DataTypes.STRING,
-    password_salt: DataTypes.STRING,
-    deleted: DataTypes.TINYINT,
-    user_type_id: DataTypes.INTEGER,
-    created: DataTypes.DATE,
-    updated: DataTypes.DATE,
-  }
+export interface iUserAddSchema {
+    email: string
+    passwordSalt: string
+    passwordHash: string
+}
+
+export interface iUserSchema extends Model<iUserSchema, iUserAddSchema> {
+    id: number
+    email: string
+    passwordSalt: string
+    passwordHash: string
+    createdAt: string
+    updatedAt: string
+    deleted: boolean
+}
+
+export interface iUserViewSchema {
+    id: number
+    email: string
+    createdAt: string
+    updatedAt: string
+}
+
+export const UserModelSchema = {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    email: {
+        type: DataTypes.STRING
+    },
+    passwordSalt: {
+        type: DataTypes.STRING
+    },
+    passwordHash: {
+        type: DataTypes.STRING
+    },
+    createdAt: {
+        type: DataTypes.DATE
+    },
+    updatedAt: {
+        type: DataTypes.DATE
+    },
+    deleted: DataTypes.BOOLEAN
+
 }

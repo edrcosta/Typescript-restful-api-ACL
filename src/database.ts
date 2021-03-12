@@ -1,21 +1,18 @@
 import { Sequelize } from 'sequelize'
-import { UsersModel, UsersTypesModel } from './models'
+import { iUserSchema, iUserAddSchema, UserModelSchema } from './models'
+import { iUserTypeSchema, iUserTypeAddSchema, UserTypeModelSchema } from './models'
+import { iTableMap } from './interfaces'
 
 export class Database {
-  static tables: Object
-
+  static connection: Sequelize
+  static tables: iTableMap
+  
   static initialize(connectionString: string) {
-    const connection = new Sequelize(connectionString)
+    const sequelize = new Sequelize(connectionString)
 
     Database.tables = {
-      userTypes: UsersTypesModel.init(UsersTypesModel.dataSchema, {
-        sequelize: connection,
-        tableName: 'Users',
-      }),
-      users: UsersModel.init(UsersModel.dataSchema, {
-        sequelize: connection,
-        tableName: 'Users',
-      }),
+      users: sequelize.define<iUserSchema, iUserAddSchema>('Users', UserModelSchema),
+      userTypes: sequelize.define<iUserTypeSchema, iUserTypeAddSchema>('UserTypes', UserTypeModelSchema)
     }
   }
 }
