@@ -1,23 +1,17 @@
 import * as Express from 'express'
 
 import { ENV } from './helpers'
-import { Endpoints } from './endpoints'
-import { iEndpoint } from './interfaces'
+import { LoadEndpoints } from './endpoints'
 import { Database } from './database'
-;(() => {
-  ENV.initialize()
-  Database.initialize('sqlite::memory:')
+
+(() => {
+  const env = ENV.initialize()
+  
+  Database.initialize(env.DATABASE_CONNECTION_STRING)
 
   const application = Express()
+  
+  LoadEndpoints(application)
 
-  Endpoints.forEach((endpoint: iEndpoint) => {
-    const method = endpoint.method.toLocaleLowerCase()
-
-    if (method === 'get') application.get(endpoint.url, endpoint.handdler)
-    if (method === 'post') application.post(endpoint.url, endpoint.handdler)
-    if (method === 'put') application.put(endpoint.url, endpoint.handdler)
-    if (method === 'delete') application.delete(endpoint.url, endpoint.handdler)
-  })
-
-  application.listen(3000)
+  application.listen(env.SERVER_PORT)
 })()
