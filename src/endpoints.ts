@@ -1,27 +1,24 @@
 import { iEndpoint } from "./interfaces/";
 import {
   UsersController,
-  TypesController,
+  UserTypesController,
   AuthenticationController,
 } from "./controllers";
 
 const users = new UsersController();
-const types = new TypesController();
+const userTypes = new UserTypesController();
 const authentication = new AuthenticationController();
 
 export const Endpoints: Array<iEndpoint> = [
-  // User endpoints
   { url: "/users", handdler: users.create, method: "POST" },
-  { url: "/users", handdler: users.create, method: "GET" },
-  { url: "/users/:id", handdler: users.create, method: "GET" },
-  { url: "/users/:id", handdler: users.create, method: "PUT" },
-  { url: "/users/:id", handdler: users.create, method: "DELETE" },
-  // Type endpoints
-  { url: "/types", handdler: types.create, method: "POST" },
-  { url: "/types", handdler: types.create, method: "GET" },
-  { url: "/types/:id", handdler: types.create, method: "GET" },
-  { url: "/types/:id", handdler: types.create, method: "PUT" },
-  { url: "/types/:id", handdler: types.create, method: "DELETE" },
-  // Authentication
+  { url: "/users", handdler: users.list, method: "GET" },
+  { url: "/users/:id", handdler: users.get, method: "GET" },
+  { url: "/users/:id", handdler: users.update, method: "PUT" },
+  { url: "/users/:id", handdler: users.delete, method: "DELETE" },
+  { url: "/types", handdler: userTypes.create, method: "POST" },
+  { url: "/types", handdler: userTypes.list, method: "GET" },
+  { url: "/types/:id", handdler: userTypes.get, method: "GET" },
+  { url: "/types/:id", handdler: userTypes.update, method: "PUT" },
+  { url: "/types/:id", handdler: userTypes.delete, method: "DELETE" },
   { url: "/authentication", handdler: authentication.generateToken, method: "POST" },
 ];

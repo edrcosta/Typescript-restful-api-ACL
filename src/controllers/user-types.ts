@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-export class TypesController {
+export class UserTypesController {
   get(req: Request, res: Response) {
     res.json({
       status: "success",
