@@ -7,20 +7,16 @@ import { iEndpoint } from "./interfaces";
 (() => {
   ENV.initialize();
 
-  const app = Express();
+  const application = Express();
 
   Endpoints.forEach((endpoint: iEndpoint) => {
-    if (endpoint.method === "GET") app.get(endpoint.url, endpoint.handdler);
-    else if (endpoint.method === "POST")
-      app.post(endpoint.url, endpoint.handdler);
-    else if (endpoint.method === "PUT")
-      app.put(endpoint.url, endpoint.handdler);
-    else if (endpoint.method === "DELETE")
-      app.delete(endpoint.url, endpoint.handdler);
-    else {
-      throw new Error(`${endpoint.method} method is not allowed`);
-    }
+    const method = endpoint.method.toLocaleLowerCase();
+
+    method === "get" ? application.get(endpoint.url, endpoint.handdler) : false;
+    method === "post" ? application.post(endpoint.url, endpoint.handdler) : false;
+    method === "put" ? application.put(endpoint.url, endpoint.handdler) : false;
+    method === "delete" ? application.delete(endpoint.url, endpoint.handdler) : false;
   });
 
-  app.listen(3000);
+  application.listen(3000);
 })();
