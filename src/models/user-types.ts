@@ -1,9 +1,11 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from "sequelize";
 
-export const UserTypesModel = {
+export class UsersTypesModel extends Model {
+  static dataSchema = {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     deleted: DataTypes.TINYINT,
     created: DataTypes.DATE,
-    updated: DataTypes.DATE
+    updated: DataTypes.DATE,
+  };
 }
