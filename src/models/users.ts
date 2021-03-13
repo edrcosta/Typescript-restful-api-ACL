@@ -2,35 +2,34 @@ import { DataTypes, Model } from 'sequelize'
 
 export interface iUserAddSchema {
   name: string
-  type: string
+  typeId: string
   email: string
   status: number
   password: string
-  password_salt: string
+  passwordSalt: string
 }
 
 export interface iUserSchema extends Model<iUserSchema, iUserAddSchema> {
   id: number
   name: string
-  type: string
+  typeId: string
   email: string
   status: number
   password: string
-  password_salt: string
-  created_at: string
-  updated_at: string
+  passwordSalt: string
+  createdAt: string
+  updatedAt: string
   deleted: boolean
 }
 
 export interface iUserViewSchema {
   id: number
   name: string
-  type: string
+  typeId: string
   email: string
   status: number
-  created_at: string
-  updated_at: string
-  deleted: boolean
+  createdAt: string
+  updatedAt: string
 }
 
 export const UserModelSchema = {
@@ -42,7 +41,8 @@ export const UserModelSchema = {
   name: {
     type: DataTypes.STRING,
   },
-  type_id: {
+  typeId: {
+    field: 'type_id',
     type: DataTypes.INTEGER,
   },
   email: {
@@ -54,13 +54,16 @@ export const UserModelSchema = {
   password: {
     type: DataTypes.STRING,
   },
-  password_salt: {
+  passwordSalt: {
+    field: 'password_salt',
     type: DataTypes.STRING,
   },
-  created_at: {
+  createdAt: {
+    field: 'created_at',
     type: DataTypes.DATE,
   },
-  updated_at: {
+  updatedAt: {
+    field: 'updated_at',
     type: DataTypes.DATE,
   },
   deleted: DataTypes.BOOLEAN

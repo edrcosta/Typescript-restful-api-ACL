@@ -1,10 +1,13 @@
 import { Sequelize } from 'sequelize'
-import { iUserSchema, iUserAddSchema, UserModelSchema } from './models'
-import {
+import { 
+  iUserSchema, 
+  iUserAddSchema, 
+  UserModelSchema,
   iUserTypeSchema,
   iUserTypeAddSchema,
-  UserTypeModelSchema,
+  UserTypeModelSchema
 } from './models'
+
 import { iEnvDatabase, iTableMap } from './interfaces'
 
 export class Database {
@@ -15,6 +18,7 @@ export class Database {
     const sequelize = new Sequelize(envDb.SCHEMA, envDb.USER, envDb.PASSWORD, {
       host: envDb.HOST,
       dialect: envDb.DIALECT,
+      logging: false
     })
 
     Database.tables = {

@@ -9,8 +9,8 @@ export interface iUserTypeSchema extends Model<iUserTypeSchema, iUserTypeAddSche
   id: number
   name: string
   description: string
-  created_at: string
-  updated_at: string
+  createdAt: string
+  updatedAt: string
   deleted: boolean
 }
 
@@ -18,9 +18,8 @@ export interface iUserTypeViewSchema {
   id: number
   name: string
   description: string
-  created_at: string
-  updated_at: string
-  deleted: boolean
+  createdAt: string
+  updatedAt: string
 }
 
 export const UserTypeModelSchema = {
@@ -35,10 +34,12 @@ export const UserTypeModelSchema = {
   description: {
     type: DataTypes.STRING,
   },
-  created_at: {
+  createdAt: {
+    field: 'created_at',
     type: DataTypes.STRING,
   },
-  updated_at: {
+  updatedAt: {
+    field: 'updated_at',
     type: DataTypes.STRING,
   },
   deleted: DataTypes.BOOLEAN
