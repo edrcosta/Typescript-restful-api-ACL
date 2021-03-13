@@ -10,7 +10,7 @@
     "build": "npx tsc",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
-    "migrate": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+    "migrate": "cd migrations && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
   },
   "author": "Eder Costa",
   "license": "ISC",
