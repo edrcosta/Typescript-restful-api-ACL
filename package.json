@@ -5,7 +5,7 @@
   "main": "dist/start.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/start.js",
+    "start": "npx tsc && node dist/start.js",
     "build-watch": "npx tsc -w",
     "build": "npx tsc",
     "lint": "eslint src/",
@@ -25,13 +25,14 @@
     "eslint-plugin-prettier": "3.1.4",
     "prettier": "2.0.5",
     "sequelize-cli": "^6.2.0",
+    "sequelize-cli-typescript": "^3.2.0-c",
     "ts-node": "8.10.2",
     "typescript": "^4.2.3"
   },
   "dependencies": {
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
-    "sequelize": "^6.5.0",
-    "sqlite3": "^5.0.2"
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.5.0"
   }
 }
