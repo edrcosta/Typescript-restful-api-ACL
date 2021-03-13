@@ -1,3 +1,10 @@
 {
-    "SERVER_PORT": 3000
+    "SERVER_PORT": 3000,
+    "DATABASE": {
+        "SCHEMA": "devires_test",
+        "HOST": "localhost",
+        "PASSWORD": "root",
+        "USER": "root",
+        "DIALECT": "mysql"
+    }
 }
