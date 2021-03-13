@@ -1,44 +1,45 @@
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import { DataTypes, Model, Sequelize } from 'sequelize'
 
 export interface iUserTypeAddSchema {
-    name: string
-    description: string
+  name: string
+  description: string
 }
 
 export interface iUserTypeSchema extends Model<iUserTypeSchema, iUserTypeAddSchema> {
-    id: number
-    name: string
-    description: string
-    createdAt: string
-    updatedAt: string
-    deleted: boolean
+  id: number
+  name: string
+  description: string
+  created_at: string
+  updated_at: string
+  deleted: boolean
 }
 
 export interface iUserTypeViewSchema {
-    id: number
-    name: string
-    createdAt: string
-    updatedAt: string
+  id: number
+  name: string
+  description: string
+  created_at: string
+  updated_at: string
+  deleted: boolean
 }
 
 export const UserTypeModelSchema = {
-    id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    name: {
-        type: DataTypes.STRING
-    },
-    description: {
-      type: DataTypes.STRING
-    },
-    createdAt: {
-        type: DataTypes.STRING
-    },
-    updatedAt: {
-        type: DataTypes.STRING
-    },
-    deleted: DataTypes.BOOLEAN
-
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  name: {
+    type: DataTypes.STRING,
+  },
+  description: {
+    type: DataTypes.STRING,
+  },
+  created_at: {
+    type: DataTypes.STRING,
+  },
+  updated_at: {
+    type: DataTypes.STRING,
+  },
+  deleted: DataTypes.BOOLEAN
 }
