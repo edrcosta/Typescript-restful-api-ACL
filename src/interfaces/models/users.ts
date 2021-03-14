@@ -1,4 +1,5 @@
 import { Model } from 'sequelize'
+import { iUserTypeSchema } from './user-types'
 
 export interface iUserAddSchema {
   name: string
@@ -22,6 +23,7 @@ export interface iUserUpdateBodySchema {
 }
 
 export interface iUserSchema extends Model<iUserSchema, iUserAddSchema> {
+  UserType?: iUserTypeSchema
   id: number
   name: string
   typeId: string

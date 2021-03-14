@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { CRUD } from '../bussiness/crud'
+import { CRUD, Authentication } from '../bussiness'
 import { Database } from '../bussiness/database'
 import {
   iUserListQuery,
@@ -32,11 +32,18 @@ export class UsersController {
     req: Request<null, null, null, iUserListQuery>,
     res: Response
   ): Promise<void> {
-    const users = new CRUD('Users')
+    const auth = new Authentication()
 
-    res.json(
-      await users.listWithPagination(req.query.page ? req.query.page : 1)
-    )
+    console.log(req.headers.authorization)
+    if (!auth.userHasPermission(req.headers.authorization, 'admin')) {
+      res.json(auth.authenticationError)
+    } else {
+      const users = new CRUD('Users')
+
+      res.json(
+        await users.listWithPagination(req.query.page ? req.query.page : 1)
+      )
+    }
   }
 
   /**

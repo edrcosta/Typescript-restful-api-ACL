@@ -9,4 +9,5 @@ export interface iEnvDatabase {
 export interface iEnv {
   SERVER_PORT: string
   DATABASE: iEnvDatabase
+  JWT_SECRET: string
 }
