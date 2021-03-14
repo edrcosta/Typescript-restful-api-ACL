@@ -1,7 +1,6 @@
-import { iUserSchema, iUserTypeSchema } from '../models'
+import { iUserSchema, iUserTypeSchema } from '../interfaces'
 import { ModelCtor } from 'sequelize'
 
 export interface iTableMap {
-  users: ModelCtor<iUserSchema>
-  userTypes: ModelCtor<iUserTypeSchema>
+  [key: string]: ModelCtor<iUserTypeSchema | iUserSchema>
 }
