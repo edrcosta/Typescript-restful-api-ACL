@@ -3,6 +3,7 @@ import { Model } from 'sequelize'
 export interface iUserTypeAddSchema {
   name: string
   description: string
+  [key: string]: string | number | boolean | undefined
 }
 
 export interface iUserTypeSchema
@@ -21,4 +22,5 @@ export interface iUserTypeViewSchema {
   description: string
   createdAt: string
   updatedAt: string
+  [key: string]: string | number | boolean | undefined
 }
