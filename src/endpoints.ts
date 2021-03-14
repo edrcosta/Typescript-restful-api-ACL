@@ -1,28 +1,19 @@
-import { iEndpoint } from './interfaces/'
-import {
-  UsersController,
-  UserTypesController,
-  AuthenticationController,
-} from './controllers'
+import { Express } from 'express'
+import { UsersController, UserTypesController } from './controllers'
 
 const users = new UsersController()
 const userTypes = new UserTypesController()
-const authentication = new AuthenticationController()
 
-export const Endpoints: Array<iEndpoint> = [
-  { url: '/users', handdler: users.create, method: 'POST' },
-  { url: '/users', handdler: users.list, method: 'GET' },
-  { url: '/users/:id', handdler: users.get, method: 'GET' },
-  { url: '/users/:id', handdler: users.update, method: 'PUT' },
-  { url: '/users/:id', handdler: users.delete, method: 'DELETE' },
-  { url: '/types', handdler: userTypes.create, method: 'POST' },
-  { url: '/types', handdler: userTypes.list, method: 'GET' },
-  { url: '/types/:id', handdler: userTypes.get, method: 'GET' },
-  { url: '/types/:id', handdler: userTypes.update, method: 'PUT' },
-  { url: '/types/:id', handdler: userTypes.delete, method: 'DELETE' },
-  {
-    url: '/authentication',
-    handdler: authentication.generateToken,
-    method: 'POST',
-  },
-]
+export const LoadEndpoints = (application: Express): void => {
+  application.get('/users', users.list)
+  application.get('/users/:id', users.get)
+  application.put('/users/:id', users.update)
+  application.post('/users', users.create)
+  application.delete('/users', users.delete)
+
+  application.get('/types', userTypes.list)
+  application.get('/types/:id', userTypes.get)
+  // application.put('/types/:id', userTypes.update)
+  // application.post('/types', userTypes.create)
+  // application.delete('/types', userTypes.delete)
+}
