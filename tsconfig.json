@@ -9,7 +9,8 @@
       "types": ["node"],
     },
     "include": [
-      "src/*"
+      "src/*", 
+      "src/*/*"
     ],
     "exclude": [
       "tests/*"
