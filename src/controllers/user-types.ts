@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { CRUD } from '../crud'
+import { CRUD } from '../bussiness/crud'
 import { iUserTypeGetOneParams, iUserTypeListQuery } from '../interfaces'
-import { Database } from '../database'
+import { Database } from '../bussiness/database'
 
 export class UserTypesController {
   /**

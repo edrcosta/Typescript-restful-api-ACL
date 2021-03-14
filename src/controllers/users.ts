@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { CRUD } from '../crud'
-import { Database } from '../database'
+import { CRUD } from '../bussiness/crud'
+import { Database } from '../bussiness/database'
 import {
   iUserListQuery,
   iUserGetOneParams,
