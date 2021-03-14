@@ -7,7 +7,7 @@ import {
   iUserTypeAddSchema,
   iUserSchema,
   iUserAddSchema,
-} from './interfaces'
+} from '../interfaces'
 
 export class Database {
   static connection: Sequelize

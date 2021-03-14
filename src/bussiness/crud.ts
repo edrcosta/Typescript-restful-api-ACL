@@ -1,6 +1,6 @@
 import { Database } from './database'
 import { ValidationError, ValidationErrorItem } from 'sequelize'
-import { iUserUpdateBodySchema } from './interfaces'
+import { iUserUpdateBodySchema } from '../interfaces'
 
 export class CRUD {
   targetTable
