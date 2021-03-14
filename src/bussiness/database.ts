@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-import { UserModelSchema, UserTypeModelSchema } from './models'
+import { UserModelSchema, UserTypeModelSchema } from '../models'
 import {
   iEnvDatabase,
   iTableMap,
@@ -20,6 +20,7 @@ export class Database {
       logging: false,
     })
 
+    // Define tables
     Database.tables = {
       Users: sequelize.define<iUserSchema, iUserAddSchema>(
         'Users',
@@ -30,5 +31,11 @@ export class Database {
         UserTypeModelSchema
       ),
     }
+
+    //Define Relationships
+    Database.tables.Users.hasOne(Database.tables.UserTypes, {
+      foreignKey: 'id',
+      sourceKey: 'typeId',
+    })
   }
 }
