@@ -123,7 +123,7 @@ export class Authentication {
     }
   }
 
-  async checkUserTypeExists(userType: string): Promise<boolean> {
+  async getUserType(userType: string): Promise<boolean> {
     const typeDb = await Database.tables.UserTypes.findOne({
       where: {
         deleted: null,
@@ -136,16 +136,16 @@ export class Authentication {
 
   userHasPermission(
     userType: string | undefined,
-    requiredType: string
+    requiredType: Array<string>
   ): boolean {
-    if (!userType) return false
+    if (!userType || requiredType.indexOf(userType) === -1) return false
 
-    if (!this.checkUserTypeExists(userType)) return false
+    if (!this.getUserType(userType)) return false
 
-    if (!this.checkUserTypeExists(requiredType)) {
+    if (!this.getUserType(requiredType[requiredType.indexOf(userType)])) {
       throw new Error('you are tryng to check an user type that dont exists')
     }
 
-    return userType === requiredType
+    return userType === requiredType[requiredType.indexOf(userType)]
   }
 }

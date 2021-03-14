@@ -34,8 +34,7 @@ export class UsersController {
   ): Promise<void> {
     const auth = new Authentication()
 
-    console.log(req.headers.authorization)
-    if (!auth.userHasPermission(req.headers.authorization, 'admin')) {
+    if (!auth.userHasPermission(req.headers.authorization, ['admin', 'root'])) {
       res.json(auth.authenticationError)
     } else {
       const users = new CRUD('Users')
