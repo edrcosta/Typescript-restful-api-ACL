@@ -6,5 +6,6 @@
         "PASSWORD": "root",
         "USER": "root",
         "DIALECT": "mysql"
-    }
+    },
+    "JWT_SECRET": "QPOVwbVkBri8SMbYMcHv7fHIOARoENA36tZBv9KGcLQ8FIJYKSxkSIMbkcfR10dkQPOVwbVkBri8SMbYMcHv7fHIOARoENA36tZBv9KGcLQ8FIJYKSxkSIMbkcfR10dk"
 }
