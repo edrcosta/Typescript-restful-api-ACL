@@ -3,16 +3,21 @@ import { urlencoded, json } from 'body-parser'
 
 import { ENV } from './helpers'
 import { LoadEndpoints } from './endpoints'
-import { Database } from './database'
+import { Database } from './bussiness/database'
+import { HttpError } from './helpers/'
+import { Authentication } from './bussiness'
 ;(() => {
   const env = ENV.initialize()
 
   Database.initialize(env.DATABASE)
 
+  const auth = new Authentication()
   const application = Express()
 
-  application.use(urlencoded({ extended: false }))
-  application.use(json())
+  application.use(auth.middleware) // Authentication
+  application.use(urlencoded({ extended: false })) // Json body parser
+  application.use(json()) // Json body parser
+  application.use(HttpError.handdler) // error handdler
 
   LoadEndpoints(application)
 
