@@ -1,26 +1,4 @@
-import { DataTypes, Model, Sequelize } from 'sequelize'
-
-export interface iUserTypeAddSchema {
-  name: string
-  description: string
-}
-
-export interface iUserTypeSchema extends Model<iUserTypeSchema, iUserTypeAddSchema> {
-  id: number
-  name: string
-  description: string
-  createdAt: string
-  updatedAt: string
-  deleted: boolean
-}
-
-export interface iUserTypeViewSchema {
-  id: number
-  name: string
-  description: string
-  createdAt: string
-  updatedAt: string
-}
+import { DataTypes } from 'sequelize'
 
 export const UserTypeModelSchema = {
   id: {
@@ -42,5 +20,5 @@ export const UserTypeModelSchema = {
     field: 'updated_at',
     type: DataTypes.STRING,
   },
-  deleted: DataTypes.BOOLEAN
+  deleted: DataTypes.BOOLEAN,
 }

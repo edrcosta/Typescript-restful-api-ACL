@@ -1,36 +1,4 @@
-import { DataTypes, Model } from 'sequelize'
-
-export interface iUserAddSchema {
-  name: string
-  typeId: string
-  email: string
-  status: number
-  password: string
-  passwordSalt: string
-}
-
-export interface iUserSchema extends Model<iUserSchema, iUserAddSchema> {
-  id: number
-  name: string
-  typeId: string
-  email: string
-  status: number
-  password: string
-  passwordSalt: string
-  createdAt: string
-  updatedAt: string
-  deleted: boolean
-}
-
-export interface iUserViewSchema {
-  id: number
-  name: string
-  typeId: string
-  email: string
-  status: number
-  createdAt: string
-  updatedAt: string
-}
+import { DataTypes } from 'sequelize'
 
 export const UserModelSchema = {
   id: {
@@ -40,23 +8,29 @@ export const UserModelSchema = {
   },
   name: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   typeId: {
     field: 'type_id',
     type: DataTypes.INTEGER,
+    allowNull: false,
   },
   email: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   status: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
+    allowNull: false,
   },
   passwordSalt: {
     field: 'password_salt',
     type: DataTypes.STRING,
+    allowNull: false,
   },
   createdAt: {
     field: 'created_at',
@@ -66,5 +40,5 @@ export const UserModelSchema = {
     field: 'updated_at',
     type: DataTypes.DATE,
   },
-  deleted: DataTypes.BOOLEAN
+  deleted: DataTypes.BOOLEAN,
 }
