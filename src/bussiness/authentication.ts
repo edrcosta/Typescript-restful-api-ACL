@@ -1,11 +1,10 @@
 import * as jwt from 'jsonwebtoken'
 import { Response, NextFunction, Request } from 'express'
-import { Database } from './database'
 import { CryptoHelper } from '../helpers'
 
 import { iAuthResponse, iEnv, iAccessTokenDecoded, iAuthRequest } from '../interfaces'
 import { ENV } from '../helpers/env'
-import { UserTypesModel } from '../models'
+import { UserModel, UserTypesModel } from '../models'
 
 export class Authentication {
   env: iEnv
@@ -27,17 +26,15 @@ export class Authentication {
    * Generate an Json web token with user data case found a valid user
    */
   async generateToken(email: string, password: string): Promise<iAuthResponse> {
-    const user = await Database.tables.Users.findOne({
-      where: {
-        ...Database.softDelete,
-        email: email,
-        status: 'ATIVO',
-      },
-      include: [Database.tables.UserTypes],
-    })
+    const user = await UserModel.getByEmail(email)
 
-    if (!user || !user.UserType || !user.passwordSalt) return this.authenticationError
-    if (user.password !== CryptoHelper.encipher(password + user.passwordSalt)) return this.authenticationError
+    if (!user || !user.UserType || !user.passwordSalt) {
+      return this.authenticationError
+    }
+
+    if (user.password !== CryptoHelper.encipher(password + user.passwordSalt)) {
+      return this.authenticationError
+    }
 
     const tokenData: iAccessTokenDecoded = {
       id: user.id,
@@ -60,7 +57,6 @@ export class Authentication {
   validateAccess(token: string): iAccessTokenDecoded | false {
     try {
       // i use any here because there is an issue with jwt.verify return type https://github.com/auth0/node-jsonwebtoken/issues/483
-      // but i still typing the return value from this method so this "any" exists only in this method scope
       const decoded: any = jwt.verify(token.replace('Bearer ', ''), this.env.JWT_SECRET)
 
       return {
@@ -79,28 +75,23 @@ export class Authentication {
   /**
    * Validate the access of an user
    */
-  middleware = (req: Request<iAuthRequest>, res: Response, next: NextFunction): void => {
-    if (req.path === '/login') {
-      next()
-    } else {
-      const auth = new Authentication()
+  middleware = (req: Request<iAuthRequest>, res: Response, next: NextFunction): void | Response<iAuthResponse> => {
+    if (req.path === '/login') return next()
 
-      if (req.headers?.authorization) {
-        const validDecodedToken = auth.validateAccess(req.headers.authorization)
+    const auth = new Authentication()
 
-        if (validDecodedToken) {
-          Authentication.loggedData = validDecodedToken
-          req.headers.authorization = validDecodedToken.userType
-          next()
-        } else {
-          res.status(401)
-          res.json(this.authenticationError)
-        }
-      } else {
-        res.status(401)
-        res.json(this.authenticationError)
+    if (req.headers?.authorization) {
+      const validDecodedToken = auth.validateAccess(req.headers.authorization)
+
+      if (validDecodedToken) {
+        Authentication.loggedData = validDecodedToken
+        req.headers.authorization = validDecodedToken.userType
+        return next()
       }
     }
+
+    res.status(401)
+    return res.json(this.authenticationError)
   }
 
   /**
