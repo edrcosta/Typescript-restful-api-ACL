@@ -13,6 +13,9 @@ export class UserTypesController {
         where: {
           id: req.params.id,
         },
+        attributes: {
+          exclude: ['deleted'],
+        },
       })
     )
   }
@@ -27,7 +30,9 @@ export class UserTypesController {
     const userTypes = new CRUD('UserTypes')
 
     res.json(
-      await userTypes.listWithPagination(req.query.page ? req.query.page : 1)
+      await userTypes.listWithPagination(req.query.page ? req.query.page : 0, [
+        'deleted',
+      ])
     )
   }
 }
