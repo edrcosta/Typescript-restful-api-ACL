@@ -17,10 +17,6 @@ export const LoadEndpoints = (application: Express): void => {
   application.put('/users/:id', users.update)
   application.post('/users', users.create)
   application.delete('/users/:id', users.delete)
-
   application.get('/types', userTypes.list)
   application.get('/types/:id', userTypes.get)
-  // application.put('/types/:id', userTypes.update)
-  // application.post('/types', userTypes.create)
-  // application.delete('/types', userTypes.delete)
 }

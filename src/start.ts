@@ -1,7 +1,7 @@
 import * as Express from 'express'
 import { urlencoded, json } from 'body-parser'
 
-import { ENV, CryptoHelper } from './helpers'
+import { ENV } from './helpers'
 import { LoadEndpoints } from './endpoints'
 import { Database } from './bussiness/database'
 import { HttpError } from './helpers/'
