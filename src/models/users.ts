@@ -91,4 +91,15 @@ export class UserModel {
       offset: (page + 1) * perPage - perPage,
     })
   }
+
+  static async getByEmail(email: string): Promise<iUserSchema | null> {
+    return Database.tables.Users.findOne({
+      where: {
+        ...Database.softDelete,
+        email: email,
+        status: 'ATIVO',
+      },
+      include: [Database.tables.UserTypes],
+    })
+  }
 }
