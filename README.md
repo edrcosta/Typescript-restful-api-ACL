@@ -10,35 +10,46 @@ Typescritp Restfull API
 
 2. para configurações foi utilizado o formato .json ao invés de .env (preferencia pessoal), json é um formato nativo do node...
 
-3. O banco de dados que escolhi foi o Mysql por se tratarem de dados simples e estruturados porém graças ao Sequelize a troca de banco de dados pode ser feita apenas alterando as configurações de conexão e instalação do driver adequado para o sequelize.
+3. O banco de dados que escolhi foi o Mysql por se tratarem de dados simples e estruturados porém graças ao Sequelize a troca de banco de dados pode ser feita apenas alterando as configurações de conexão e instalação do driver adequado para o banco escolhido.
 
-4. Não utilizei docker por questão de "tempo" mas ao concluir o projeto acredito que vou tomar um tempo para adicionar um docker-compose e um dockerfile
-
-5. Adicionei as tabelas created_at e updated_at para manter o histórico de modificação de registros e a base utiliza soft delete (deleção lógica).
+5. Adicionei as tabelas created_at e updated_at para manter o histórico de modificação de registros e a base utiliza soft delete (deleção lógica, é sempre bom manter um log).
 
 6. para armazenamento de senhas utilizei password_hash e passord_salt garantindo anomimato e maior segurança (https://www.youtube.com/watch?v=8ZtInClXe1Q). 
+
+7. a partir daqui é inglês rs 
 
 ## Dependencies 
 
 - [Node JS version 14+](https://nodejs.org/)
 - [Mysql](https://www.mysql.com/downloads/)
 
-### Build 
+### Development & Build 
+
+*Single Build*
 
 - *Just build:* `npm run build`
+
+*For develpment*
+
 - *Build and watch files:* `npm run build-watch`
 
-### Migrations 
+## SETUP the project 
 
-the first time you execute this API you need to install run migrations 
+### 1 - Migrations 
+
+if you dont setup this before do:
 
 1. create an database on mysql 
-2. copy env-sample.json and rename to env.json
-3. put your 
+2. copy migrations\config\config-sample.json and rename to migrations\config\config.json
+4. on your terminal navegate at this project main folder 
+5. run `npm run migrate`
+6. your database must be ready 
 
-### Running the API 
+### 2 - Running the API 
 
 1. clone this repo.
+2. copy env-sample.json and rename to env.json
+3. edit env.json file to your database name, user, password, host, port...
 2. on terminal type and run `npm install`
 3. after install packages run `npm start`
 
@@ -49,6 +60,12 @@ the first time you execute this API you need to install run migrations
 
 ### Running Tests 
 
-@Todo
+@Todo Eu não tive muito tempo para terminar isso irei fazendo ao longo do dia.
 
+## Documentations 
 
+inside the folder docs you will find 
+
+1. Postman collection with endpoints and parameters
+2. Database schema image 
+3. Database mysql worckbench model 
