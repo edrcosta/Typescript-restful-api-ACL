@@ -1,4 +1,4 @@
-import { iUserSchema, iUserTypeSchema } from '../interfaces'
+import { iUserSchema, iUserTypeSchema } from '../'
 import { ModelCtor } from 'sequelize'
 
 export interface iTableMap {
