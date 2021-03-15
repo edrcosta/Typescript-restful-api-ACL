@@ -37,7 +37,6 @@ export class Authentication {
     })
 
     if (!user || !user.UserType || !user.passwordSalt) return this.authenticationError
-
     if (user.password !== CryptoHelper.encipher(password + user.passwordSalt)) return this.authenticationError
 
     const tokenData: iAccessTokenDecoded = {
@@ -104,6 +103,9 @@ export class Authentication {
     }
   }
 
+  /**
+   * Check if permission exists and if match an array of permissions
+   */
   userHasPermission(userType: string | undefined, requiredType: Array<string>): boolean {
     if (!userType || requiredType.indexOf(userType) === -1) return false
 
