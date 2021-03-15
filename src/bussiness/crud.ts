@@ -10,23 +10,6 @@ export class CRUD {
   }
 
   /**
-   * Return a list from the target table and calculate limit and offset from a page number
-   */
-  listWithPagination<T>(page: number, excludeFields?: string[]): Promise<unknown> {
-    const perPage = 10
-    return this.targetTable.findAll({
-      where: {
-        deleted: null,
-      },
-      limit: perPage,
-      attributes: {
-        exclude: excludeFields ? excludeFields : [],
-      },
-      offset: (page + 1) * perPage - perPage,
-    })
-  }
-
-  /**
    * Validate a body for an update operation fixing the issue of all optional fields
    *
    * when updating we need to allow undefined fields to no be identified as an error

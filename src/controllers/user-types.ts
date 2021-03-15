@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { CRUD } from '../bussiness/crud'
 import { iUserTypeGetOneParams, iUserTypeListQuery, iUserTypeSchema } from '../interfaces'
 import { Database } from '../bussiness/database'
+import { UserTypesModel } from '../models'
 
 export class UserTypesController {
   /**
@@ -20,8 +20,6 @@ export class UserTypesController {
    * Endpoint to list User Types with pagination
    */
   async list(req: Request<null, null, null, iUserTypeListQuery>, res: Response): Promise<Response<iUserTypeSchema[]>> {
-    const userTypes = new CRUD('UserTypes')
-
-    return res.json(await userTypes.listWithPagination(req.query.page ? req.query.page : 0, ['deleted']))
+    return res.json(await UserTypesModel.listWithPagination(req.query.page ? req.query.page : 0))
   }
 }

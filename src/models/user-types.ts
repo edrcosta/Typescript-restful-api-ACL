@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { Database } from '../bussiness'
+import { iUserTypeSchema } from '../interfaces'
 
 export class UserTypesModel {
   static schema = {
@@ -34,5 +35,20 @@ export class UserTypesModel {
     })
 
     return typeDb?.id ? true : false
+  }
+
+  static listWithPagination(page: number): Promise<iUserTypeSchema[]> {
+    const perPage = 10
+    return Database.tables.UserTypes.findAll({
+      where: {
+        ...Database.softDelete,
+      },
+      limit: perPage,
+      attributes: {
+        exclude: ['deleted'],
+      },
+      include: [Database.tables.UserTypes],
+      offset: (page + 1) * perPage - perPage,
+    })
   }
 }
