@@ -4,24 +4,6 @@ Typescritp Restfull API
 
 [Descrição do teste](test-description.md)
 
-## Observations
-
-1. as migrações foram feitas com o CLI do Sequelize, e apesar de existir uma versão Typescript a versão JS funcionou "out of the box" num cenário real acredito que valesse a pena investir um pouco mais na versão TS para não precisar "duplicar" os models" por hora isolei como uma aplicação a parte completamente *autogerada* pelo CLI.
-
-2. para configurações foi utilizado o formato .json ao invés de .env (preferencia pessoal), json é um formato nativo do node...
-
-3. O banco de dados que escolhi foi o Mysql por se tratarem de dados simples e estruturados porém graças ao Sequelize a troca de banco de dados pode ser feita apenas alterando as configurações de conexão e instalação do driver adequado para o banco escolhido.
-
-5. Adicionei as tabelas created_at e updated_at para manter o histórico de modificação de registros e a base utiliza soft delete (deleção lógica, é sempre bom manter um log).
-
-6. para armazenamento de senhas utilizei password_hash e passord_salt garantindo anomimato e maior segurança (https://www.youtube.com/watch?v=8ZtInClXe1Q). 
-
-7. há 1 único any no código inteiro que existe por que há um bug, não existe o generics de um método da biblioteca jsonwebtoken...  https://github.com/auth0/node-jsonwebtoken/issues/483
-
-8. Realizei o teste bem picado ao longo destes dias não tive muito tempo para me dedicar total a ele... esta versão atual do código é 100% compatível com as regras de negócio do teste, porém ainda não possui testes unitários (vou ir adicionando aos poucos aqui ao longo da segunda feira devo atingir 80 - 90% de cobertura).
-
-9. a partir daqui é inglês rs 
-
 ## Dependencies 
 
 - [Node JS version 14+](https://nodejs.org/)
