@@ -1,7 +1,7 @@
 import * as Express from 'express'
 import { urlencoded, json } from 'body-parser'
 
-import { ENV } from './helpers'
+import { ENV, CryptoHelper } from './helpers'
 import { LoadEndpoints } from './endpoints'
 import { Database } from './bussiness/database'
 import { HttpError } from './helpers/'
@@ -15,8 +15,8 @@ import { Authentication } from './bussiness'
   const application = Express()
 
   application.use(auth.middleware) // Authentication
-  application.use(urlencoded({ extended: false })) // Json body parser
-  application.use(json()) // Json body parser
+  application.use(urlencoded({ extended: false })) // req.body parser
+  application.use(json()) // req.body parser
   application.use(HttpError.handdler) // error handdler
 
   LoadEndpoints(application)

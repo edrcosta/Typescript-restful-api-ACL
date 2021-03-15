@@ -6,8 +6,7 @@ export interface iUserTypeAddSchema {
   [key: string]: string | number | boolean | undefined
 }
 
-export interface iUserTypeSchema
-  extends Model<iUserTypeSchema, iUserTypeAddSchema> {
+export interface iUserTypeSchema extends Model {
   id: number
   name: string
   description: string

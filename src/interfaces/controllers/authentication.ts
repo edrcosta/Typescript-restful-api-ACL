@@ -14,6 +14,7 @@ export interface iAccessTokenDecoded {
   id: number
   user: string
   userType: string
+  userTypeId: number
   iat?: number
   exp?: number
 }

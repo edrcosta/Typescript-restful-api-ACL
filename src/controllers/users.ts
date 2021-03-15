@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { CRUD, Authentication } from '../bussiness'
 import { Database } from '../bussiness/database'
+import { UserModel } from '../models'
 import {
   iUserListQuery,
   iUserGetOneParams,
@@ -15,12 +16,19 @@ export class UsersController {
    * Endpoint to get an user by id
    */
   async get(req: Request<iUserGetOneParams>, res: Response): Promise<void> {
+    const auth = new Authentication()
+    let findId = req.params.id
+    if (Authentication.loggedData.userType === auth.userTypesEnum.geral) {
+      findId = Authentication.loggedData.id
+    }
+
     res.json(
       await Database.tables.Users.findOne({
         where: {
-          deleted: null,
-          id: req.params.id,
+          ...Database.softDelete,
+          id: findId,
         },
+        include: [Database.tables.UserTypes],
       })
     )
   }
@@ -37,10 +45,8 @@ export class UsersController {
     if (!auth.userHasPermission(req.headers.authorization, ['admin', 'root'])) {
       res.json(auth.authenticationError)
     } else {
-      const users = new CRUD('Users')
-
       res.json(
-        await users.listWithPagination(req.query.page ? req.query.page : 1)
+        await UserModel.listWithPagination(req.query.page ? req.query.page : 0)
       )
     }
   }
@@ -52,14 +58,30 @@ export class UsersController {
     req: Request<null, null, iUserAddSchema>,
     res: Response
   ): Promise<void> {
-    const users = new CRUD('Users')
+    const auth = new Authentication()
 
-    const errors = await users.validate<iUserAddSchema>(req.body)
-
-    if (errors) {
-      res.json()
+    if (!auth.userHasPermission(req.headers.authorization, ['admin', 'root'])) {
+      res.json(auth.authenticationError)
     } else {
-      res.json(await Database.tables.Users.create(req.body))
+      const users = new CRUD('Users')
+
+      const errors = await users.validate<iUserAddSchema>(req.body)
+
+      if (errors) {
+        res.json({
+          errors: errors,
+        })
+      } else {
+        const exists = await UserModel.checkExist(req.body.email)
+
+        if (exists === null) {
+          res.json(await UserModel.create(req.body))
+        } else {
+          res.json({
+            errors: ['this user aready exists'],
+          })
+        }
+      }
     }
   }
 
@@ -70,24 +92,28 @@ export class UsersController {
     req: Request<iUserUpdateParams, null, iUserUpdateBodySchema>,
     res: Response
   ): Promise<void> {
-    const users = new CRUD('Users')
+    const auth = new Authentication()
 
-    const errors = await users.validate<iUserUpdateBodySchema>(req.body, true)
-
-    if (errors) {
-      res.json(errors)
+    if (!auth.userHasPermission(req.headers.authorization, ['admin', 'root'])) {
+      res.json(auth.authenticationError)
     } else {
-      const updated = await Database.tables.Users.update(req.body, {
-        where: {
-          deleted: null,
-          id: req.params.id,
-        },
-      })
+      const users = new CRUD('Users')
+      const errors = await users.validate<iUserUpdateBodySchema>(req.body, true)
 
-      res.json({
-        updated: updated[0] === 1,
-        data: req.body,
-      })
+      if (errors) {
+        res.json(errors)
+      } else {
+        const updated = await Database.tables.Users.update(req.body, {
+          where: {
+            id: req.params.id,
+          },
+        })
+
+        res.json({
+          updated: updated[0] === 1,
+          data: req.body,
+        })
+      }
     }
   }
 
@@ -95,17 +121,24 @@ export class UsersController {
    * Endpoint to Soft delete a user
    */
   async delete(req: Request<iUserDeleteParams>, res: Response): Promise<void> {
-    const softDelete = {
-      deleted: true,
+    const auth = new Authentication()
+
+    if (!auth.userHasPermission(req.headers.authorization, ['root'])) {
+      res.json(auth.authenticationError)
+    } else {
+      const updated = await Database.tables.Users.update(
+        {
+          deleted: true,
+        },
+        {
+          where: {
+            ...Database.softDelete,
+            id: req.params.id,
+          },
+        }
+      )
+
+      res.json({ deleted: updated[0] === 1 })
     }
-
-    const updated = await Database.tables.Users.update(softDelete, {
-      where: {
-        deleted: null,
-        id: req.params.id,
-      },
-    })
-
-    res.json({ deleted: updated[0] === 1 })
   }
 }

@@ -15,15 +15,20 @@ export class CRUD {
    * @param page
    * @returns
    */
-  listWithPagination<T>(page: number): Promise<unknown> {
+  listWithPagination<T>(
+    page: number,
+    excludeFields?: string[]
+  ): Promise<unknown> {
     const perPage = 10
-
     return this.targetTable.findAll({
       where: {
         deleted: null,
       },
       limit: perPage,
-      offset: page * perPage - perPage,
+      attributes: {
+        exclude: excludeFields ? excludeFields : [],
+      },
+      offset: (page + 1) * perPage - perPage,
     })
   }
 
@@ -32,6 +37,7 @@ export class CRUD {
    *
    * when updating we need to allow undefined fields to no be identified as an error
    * this fix the issue https://github.com/sequelize/sequelize/issues/270
+   * @todo remove this if somthing change in sequelize
    */
   private updateValidate = (
     errors: ValidationError,
@@ -61,7 +67,7 @@ export class CRUD {
     isUpdateValidation = false
   ): Promise<string[] | false> {
     return new Promise((resolve) => {
-      if (!data)
+      if (data)
         this.targetTable
           .build(data)
           .validate()

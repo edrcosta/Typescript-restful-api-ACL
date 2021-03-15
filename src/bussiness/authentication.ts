@@ -1,13 +1,13 @@
 import * as jwt from 'jsonwebtoken'
 import { Response, NextFunction, Request } from 'express'
 import { Database } from './database'
+import { CryptoHelper } from '../helpers'
 
 import {
   iAuthResponse,
   iEnv,
   iAccessTokenDecoded,
   iAuthRequest,
-  iUserSchema,
 } from '../interfaces'
 import { ENV } from '../helpers/env'
 
@@ -18,47 +18,45 @@ export class Authentication {
     statusCode: 401,
   }
 
-  constructor() {
-    this.env = ENV.initialize()
+  userTypesEnum = {
+    geral: 'geral',
   }
 
-  /**
-   * Check if an user exists in database
-   */
-  async checkUserExists(
-    email: string,
-    password: string
-  ): Promise<iUserSchema | null> {
-    return Database.tables.Users.findOne({
-      where: {
-        email: email,
-        password: password,
-        deleted: null,
-        status: 'ATIVO',
-      },
-      include: [Database.tables.UserTypes],
-    })
+  static loggedData: iAccessTokenDecoded
+
+  constructor() {
+    this.env = ENV.initialize()
   }
 
   /**
    * Generate an Json web token with user data case found a valid user
    */
   async generateToken(email: string, password: string): Promise<iAuthResponse> {
-    const user = await this.checkUserExists(email, password)
-    if (!user || !user.UserType) {
-      return {
-        statusCode: 401,
-        accessToken: '',
-      }
+    const user = await Database.tables.Users.findOne({
+      where: {
+        ...Database.softDelete,
+        email: email,
+        status: 'ATIVO',
+      },
+      include: [Database.tables.UserTypes],
+    })
+
+    const authFail = {
+      statusCode: 401,
+      accessToken: '',
     }
+
+    if (!user || !user.UserType || !user.passwordSalt) return authFail
+
+    if (user.password !== CryptoHelper.encipher(password + user.passwordSalt))
+      return authFail
 
     const tokenData: iAccessTokenDecoded = {
       id: user.id,
+      userTypeId: user.UserType.id,
       user: user.name,
       userType: user.UserType.name,
     }
-
-    console.log(tokenData)
 
     return {
       statusCode: 200,
@@ -84,6 +82,7 @@ export class Authentication {
         id: decoded.id,
         user: decoded.user,
         userType: decoded.userType,
+        userTypeId: decoded.userType.id,
         iat: decoded.iat,
         exp: decoded.exp,
       }
@@ -101,7 +100,6 @@ export class Authentication {
     next: NextFunction
   ): void => {
     if (req.path === '/login') {
-      res.status(401)
       next()
     } else {
       const auth = new Authentication()
@@ -110,6 +108,7 @@ export class Authentication {
         const validDecodedToken = auth.validateAccess(req.headers.authorization)
 
         if (validDecodedToken) {
+          Authentication.loggedData = validDecodedToken
           req.headers.authorization = validDecodedToken.userType
           next()
         } else {
@@ -126,7 +125,7 @@ export class Authentication {
   async getUserType(userType: string): Promise<boolean> {
     const typeDb = await Database.tables.UserTypes.findOne({
       where: {
-        deleted: null,
+        ...Database.softDelete,
         name: userType,
       },
     })

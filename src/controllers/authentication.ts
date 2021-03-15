@@ -12,8 +12,10 @@ export class AuthenticationController {
     )
 
     res.status(result.statusCode)
-    res.json({
-      accessToken: result.accessToken,
-    })
+    res.json(
+      result.statusCode === 401
+        ? auth.authenticationError
+        : { token: result.accessToken }
+    )
   }
 }

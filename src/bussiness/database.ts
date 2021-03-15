@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-import { UserModelSchema, UserTypeModelSchema } from '../models'
+import { UserModel, UserTypesModel } from '../models'
 import {
   iEnvDatabase,
   iTableMap,
@@ -13,6 +13,10 @@ export class Database {
   static connection: Sequelize
   static tables: iTableMap
 
+  static softDelete = {
+    deleted: null,
+  }
+
   static initialize(envDb: iEnvDatabase): void {
     const sequelize = new Sequelize(envDb.SCHEMA, envDb.USER, envDb.PASSWORD, {
       host: envDb.HOST,
@@ -24,11 +28,11 @@ export class Database {
     Database.tables = {
       Users: sequelize.define<iUserSchema, iUserAddSchema>(
         'Users',
-        UserModelSchema
+        UserModel.schema
       ),
       UserTypes: sequelize.define<iUserTypeSchema, iUserTypeAddSchema>(
         'UserTypes',
-        UserTypeModelSchema
+        UserTypesModel.schema
       ),
     }
 
