@@ -11,10 +11,7 @@ export class CRUD {
 
   /**
    * Validate a body for an update operation fixing the issue of all optional fields
-   *
-   * when updating we need to allow undefined fields to no be identified as an error
-   * this fix the issue https://github.com/sequelize/sequelize/issues/270
-   * @todo remove this if somthing change in sequelize
+   * this is a fix for https://github.com/sequelize/sequelize/issues/270
    */
   private updateValidate = (errors: ValidationError, isUpdateValidation: boolean, data: iUserUpdateBodySchema | iUserUpdateBodySchema | undefined) => {
     if (isUpdateValidation) {
