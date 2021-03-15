@@ -3,7 +3,7 @@ import { ErrorRequestHandler, Request, Response, NextFunction } from 'express'
 export class HttpError {
   static handdler(
     err: ErrorRequestHandler,
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
   ): void {
