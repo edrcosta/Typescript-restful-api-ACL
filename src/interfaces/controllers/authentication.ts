@@ -8,6 +8,7 @@ export interface IAuthRequest {
 export interface iAuthResponse {
   statusCode: number
   accessToken: string
+  error?: string
 }
 
 export interface iAccessTokenDecoded {

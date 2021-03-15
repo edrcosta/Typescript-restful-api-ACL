@@ -2,14 +2,7 @@ import { Request, Response } from 'express'
 import { CRUD, Authentication } from '../bussiness'
 import { Database } from '../bussiness/database'
 import { UserModel } from '../models'
-import {
-  iUserListQuery,
-  iUserGetOneParams,
-  iUserAddSchema,
-  iUserDeleteParams,
-  iUserUpdateBodySchema,
-  iUserUpdateParams,
-} from '../interfaces'
+import { iUserListQuery, iUserGetOneParams, iUserAddSchema, iUserDeleteParams, iUserUpdateBodySchema, iUserUpdateParams } from '../interfaces'
 
 export class UsersController {
   /**
@@ -36,28 +29,20 @@ export class UsersController {
   /**
    * Endpoint to List Users with pagination
    */
-  async list(
-    req: Request<null, null, null, iUserListQuery>,
-    res: Response
-  ): Promise<void> {
+  async list(req: Request<null, null, null, iUserListQuery>, res: Response): Promise<void> {
     const auth = new Authentication()
 
     if (!auth.userHasPermission(req.headers.authorization, ['admin', 'root'])) {
       res.json(auth.authenticationError)
     } else {
-      res.json(
-        await UserModel.listWithPagination(req.query.page ? req.query.page : 0)
-      )
+      res.json(await UserModel.listWithPagination(req.query.page ? req.query.page : 0))
     }
   }
 
   /**
    * Endpoint to Create new User
    */
-  async create(
-    req: Request<null, null, iUserAddSchema>,
-    res: Response
-  ): Promise<void> {
+  async create(req: Request<null, null, iUserAddSchema>, res: Response): Promise<void> {
     const auth = new Authentication()
 
     if (!auth.userHasPermission(req.headers.authorization, ['admin', 'root'])) {
@@ -88,10 +73,7 @@ export class UsersController {
   /**
    * Endpoint to update an user by id
    */
-  async update(
-    req: Request<iUserUpdateParams, null, iUserUpdateBodySchema>,
-    res: Response
-  ): Promise<void> {
+  async update(req: Request<iUserUpdateParams, null, iUserUpdateBodySchema>, res: Response): Promise<void> {
     const auth = new Authentication()
 
     if (!auth.userHasPermission(req.headers.authorization, ['admin', 'root'])) {
@@ -127,9 +109,7 @@ export class UsersController {
       res.json(auth.authenticationError)
     } else {
       const updated = await Database.tables.Users.update(
-        {
-          deleted: true,
-        },
+        { deleted: true },
         {
           where: {
             ...Database.softDelete,

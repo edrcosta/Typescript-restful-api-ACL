@@ -3,24 +3,19 @@ import { Response, NextFunction, Request } from 'express'
 import { Database } from './database'
 import { CryptoHelper } from '../helpers'
 
-import {
-  iAuthResponse,
-  iEnv,
-  iAccessTokenDecoded,
-  iAuthRequest,
-} from '../interfaces'
+import { iAuthResponse, iEnv, iAccessTokenDecoded, iAuthRequest } from '../interfaces'
 import { ENV } from '../helpers/env'
+import { UserTypesModel } from '../models'
 
 export class Authentication {
   env: iEnv
-  authenticationError = {
+  authenticationError: iAuthResponse = {
     error: 'Unauthorized client',
     statusCode: 401,
+    accessToken: '',
   }
 
-  userTypesEnum = {
-    geral: 'geral',
-  }
+  userTypesEnum = { geral: 'geral' }
 
   static loggedData: iAccessTokenDecoded
 
@@ -41,15 +36,9 @@ export class Authentication {
       include: [Database.tables.UserTypes],
     })
 
-    const authFail = {
-      statusCode: 401,
-      accessToken: '',
-    }
+    if (!user || !user.UserType || !user.passwordSalt) return this.authenticationError
 
-    if (!user || !user.UserType || !user.passwordSalt) return authFail
-
-    if (user.password !== CryptoHelper.encipher(password + user.passwordSalt))
-      return authFail
+    if (user.password !== CryptoHelper.encipher(password + user.passwordSalt)) return this.authenticationError
 
     const tokenData: iAccessTokenDecoded = {
       id: user.id,
@@ -73,10 +62,7 @@ export class Authentication {
     try {
       // i use any here because there is an issue with jwt.verify return type https://github.com/auth0/node-jsonwebtoken/issues/483
       // but i still typing the return value from this method so this "any" exists only in this method scope
-      const decoded: any = jwt.verify(
-        token.replace('Bearer ', ''),
-        this.env.JWT_SECRET
-      )
+      const decoded: any = jwt.verify(token.replace('Bearer ', ''), this.env.JWT_SECRET)
 
       return {
         id: decoded.id,
@@ -94,11 +80,7 @@ export class Authentication {
   /**
    * Validate the access of an user
    */
-  middleware = (
-    req: Request<iAuthRequest>,
-    res: Response,
-    next: NextFunction
-  ): void => {
+  middleware = (req: Request<iAuthRequest>, res: Response, next: NextFunction): void => {
     if (req.path === '/login') {
       next()
     } else {
@@ -122,26 +104,12 @@ export class Authentication {
     }
   }
 
-  async getUserType(userType: string): Promise<boolean> {
-    const typeDb = await Database.tables.UserTypes.findOne({
-      where: {
-        ...Database.softDelete,
-        name: userType,
-      },
-    })
-
-    return typeDb?.id ? true : false
-  }
-
-  userHasPermission(
-    userType: string | undefined,
-    requiredType: Array<string>
-  ): boolean {
+  userHasPermission(userType: string | undefined, requiredType: Array<string>): boolean {
     if (!userType || requiredType.indexOf(userType) === -1) return false
 
-    if (!this.getUserType(userType)) return false
+    if (!UserTypesModel.exists(userType)) return false
 
-    if (!this.getUserType(requiredType[requiredType.indexOf(userType)])) {
+    if (!UserTypesModel.exists(requiredType[requiredType.indexOf(userType)])) {
       throw new Error('you are tryng to check an user type that dont exists')
     }
 

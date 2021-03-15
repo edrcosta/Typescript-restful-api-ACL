@@ -1,4 +1,5 @@
 import { DataTypes } from 'sequelize'
+import { Database } from '../bussiness'
 
 export class UserTypesModel {
   static schema = {
@@ -22,5 +23,16 @@ export class UserTypesModel {
       type: DataTypes.STRING,
     },
     deleted: DataTypes.BOOLEAN,
+  }
+
+  static async exists(userType: string): Promise<boolean> {
+    const typeDb = await Database.tables.UserTypes.findOne({
+      where: {
+        ...Database.softDelete,
+        name: userType,
+      },
+    })
+
+    return typeDb?.id ? true : false
   }
 }

@@ -14,10 +14,10 @@ import { Authentication } from './bussiness'
   const auth = new Authentication()
   const application = Express()
 
-  application.use(auth.middleware) // Authentication
-  application.use(urlencoded({ extended: false })) // req.body parser
-  application.use(json()) // req.body parser
-  application.use(HttpError.handdler) // error handdler
+  application.use(auth.middleware)
+  application.use(urlencoded({ extended: false }))
+  application.use(json())
+  application.use(HttpError.handdler)
 
   LoadEndpoints(application)
 

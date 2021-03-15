@@ -11,14 +11,8 @@ export class CRUD {
 
   /**
    * Return a list from the target table and calculate limit and offset from a page number
-   *
-   * @param page
-   * @returns
    */
-  listWithPagination<T>(
-    page: number,
-    excludeFields?: string[]
-  ): Promise<unknown> {
+  listWithPagination<T>(page: number, excludeFields?: string[]): Promise<unknown> {
     const perPage = 10
     return this.targetTable.findAll({
       where: {
@@ -39,17 +33,12 @@ export class CRUD {
    * this fix the issue https://github.com/sequelize/sequelize/issues/270
    * @todo remove this if somthing change in sequelize
    */
-  private updateValidate = (
-    errors: ValidationError,
-    isUpdateValidation: boolean,
-    data: iUserUpdateBodySchema | iUserUpdateBodySchema | undefined
-  ) => {
+  private updateValidate = (errors: ValidationError, isUpdateValidation: boolean, data: iUserUpdateBodySchema | iUserUpdateBodySchema | undefined) => {
     if (isUpdateValidation) {
       const errorMessages: Array<string> = []
 
       errors.errors.forEach((error: ValidationErrorItem) => {
-        if (data && data[error.path] !== undefined)
-          errorMessages.push(error.message)
+        if (data && data[error.path] !== undefined) errorMessages.push(error.message)
       })
 
       if (errorMessages.length === 0) return false
@@ -62,10 +51,7 @@ export class CRUD {
   /**
    * Validates a body with Sequelize model settings for a target table
    */
-  validate<T>(
-    data: iUserUpdateBodySchema | iUserUpdateBodySchema | undefined,
-    isUpdateValidation = false
-  ): Promise<string[] | false> {
+  validate<T>(data: iUserUpdateBodySchema | iUserUpdateBodySchema | undefined, isUpdateValidation = false): Promise<string[] | false> {
     return new Promise((resolve) => {
       if (data)
         this.targetTable

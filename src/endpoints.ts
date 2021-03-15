@@ -1,10 +1,6 @@
 import { Express } from 'express'
 
-import {
-  UsersController,
-  UserTypesController,
-  AuthenticationController,
-} from './controllers'
+import { UsersController, UserTypesController, AuthenticationController } from './controllers'
 
 const users = new UsersController()
 const userTypes = new UserTypesController()

@@ -3,10 +3,7 @@ import { iPasswordAndSaltHash } from '../interfaces'
 import { ENV } from './'
 
 export class CryptoHelper {
-  static encipher = (str: string): string =>
-    createHmac('sha256', str)
-      .update(ENV.initialize().CRYPTO_SECRET)
-      .digest('hex')
+  static encipher = (str: string): string => createHmac('sha256', str).update(ENV.initialize().CRYPTO_SECRET).digest('hex')
 
   static getPasswordHash(password: string): iPasswordAndSaltHash {
     const salt = randomBytes(128).toString('base64')
