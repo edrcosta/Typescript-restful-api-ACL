@@ -16,11 +16,11 @@ Typescritp Restfull API
 
 6. para armazenamento de senhas utilizei password_hash e passord_salt garantindo anomimato e maior segurança (https://www.youtube.com/watch?v=8ZtInClXe1Q). 
 
-7. a partir daqui é inglês rs 
+7. há 1 único any no código inteiro que existe por que há um bug, não existe o generics de um método da biblioteca jsonwebtoken...  https://github.com/auth0/node-jsonwebtoken/issues/483
 
-8. há 1 único any no código inteiro que existe por que há um bug, não existe o generics de um método da biblioteca jsonwebtoken...  https://github.com/auth0/node-jsonwebtoken/issues/483
+8. Realizei o teste bem picado ao longo destes dias não tive muito tempo para me dedicar total a ele... esta versão atual do código é 100% compatível com as regras de negócio do teste, porém ainda não possui testes unitários (vou ir adicionando aos poucos aqui ao longo da segunda feira devo atingir 80 - 90% de cobertura).
 
-9. Realizei o teste bem picado ao longo destes dias não tive muito tempo para me dedicar total a ele... esta versão atual do código é 100% compatível com as regras de negócio do teste, porém ainda não possui testes unitários (vou ir adicionando aos poucos aqui ao longo da segunda feira devo atingir 80 - 90% de cobertura).
+9. a partir daqui é inglês rs 
 
 ## Dependencies 
 
