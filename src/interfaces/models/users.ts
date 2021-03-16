@@ -3,19 +3,20 @@ import { iUserTypeSchema } from './user-types'
 
 export interface iUserAddSchema {
   name: string
-  typeId: string
+  typeId: number
   email: string
-  status: number
+  status: string
   password: string
   passwordSalt?: string
   [key: string]: string | number | boolean | undefined
 }
 
 export interface iUserUpdateBodySchema {
+  id?: number
   name?: string
-  typeId?: string
+  typeId?: number
   email?: string
-  status?: number
+  status?: string
   password?: string
   passwordSalt?: string
   deleted?: boolean
@@ -26,9 +27,9 @@ export interface iUserSchema extends Model<iUserSchema, iUserAddSchema> {
   UserType?: iUserTypeSchema
   id: number
   name: string
-  typeId: string
+  typeId: number
   email: string
-  status: number
+  status: string
   password: string
   passwordSalt: string
   createdAt: string
@@ -39,9 +40,9 @@ export interface iUserSchema extends Model<iUserSchema, iUserAddSchema> {
 export interface iUserViewSchema {
   id: number
   name: string
-  typeId: string
+  typeId: number
   email: string
-  status: number
+  status: string
   createdAt: string
   updatedAt: string
 }
