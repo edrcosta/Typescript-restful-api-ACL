@@ -28,16 +28,17 @@ if you dont setup this before do:
 1. create an database on mysql 
 2. copy migrations\config\config-sample.json and rename to migrations\config\config.json
 4. on your terminal navegate at this project main folder 
-5. run `npm run migrate`
-6. your database must be ready 
+5. run `npm install`
+6. run `npm run migrate`
+7. your database must be ready 
 
 ### 2 - Running the API 
 
-1. clone this repo.
-2. copy env-sample.json and rename to env.json
+0. run `npm install` if you not aready run
+1. copy env-sample.json and rename to env.json
+2. inside env.json change the secrets to a random string with 128 chars
 3. edit env.json file to your database name, user, password, host, port...
-2. on terminal type and run `npm install`
-3. after install packages run `npm start`
+4. after install packages run `npm start`
 
 ### Lint 
 
@@ -46,7 +47,8 @@ if you dont setup this before do:
 
 ### Running Tests 
 
-@Todo Ao longo do dia.
+*Runing only tests* `npm run test`
+*Runing tests with coverage* `npm run coverage`
 
 ## Documentations 
 
