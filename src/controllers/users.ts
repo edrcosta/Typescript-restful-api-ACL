@@ -61,8 +61,7 @@ export class UsersController {
       return res.json(auth.authenticationError)
     }
 
-    const users = new CRUD('Users')
-    const errors = await users.validate<iUserAddSchema>(req.body)
+    const errors = await CRUD.validate<iUserUpdateBodySchema>(Database.tables.Users, req.body)
 
     if (errors) return res.json({ errors: errors })
 
@@ -85,8 +84,7 @@ export class UsersController {
       return res.json(auth.authenticationError)
     }
 
-    const users = new CRUD('Users')
-    const errors = await users.validate<iUserUpdateBodySchema>(req.body, true)
+    const errors = await CRUD.validate<iUserUpdateBodySchema>(Database.tables.Users, req.body, true)
 
     if (errors) return res.json(errors)
 
