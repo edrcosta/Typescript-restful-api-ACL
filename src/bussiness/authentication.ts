@@ -14,7 +14,9 @@ export class Authentication {
     accessToken: '',
   }
 
-  userTypesEnum = { geral: 'geral' }
+  userTypesEnum = {
+    geral: 'geral',
+  }
 
   static loggedData: iAccessTokenDecoded
 
