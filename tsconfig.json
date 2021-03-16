@@ -7,10 +7,14 @@
       "outDir": "./dist",
       "strict": true,
       "types": ["node"],
+      "typeRoots": [      
+        "./node-modules/@types/",
+        "./src/@types/"
+      ],
     },
     "include": [
       "src/*", 
-      "src/*/*",
+      "src/*/*", "__tests__/test.test.ts",
     ],
     "exclude": [
       "tests/*"
