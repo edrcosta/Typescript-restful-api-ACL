@@ -1,3 +1,5 @@
+import { iUserSchema } from '../models/users'
+
 export interface iUserListQuery {
   page: number
 }
@@ -25,4 +27,9 @@ export interface iUserUpdateResponse {
 
 export interface iUserDeletedResponse {
   deleted: boolean
+}
+
+export interface iCreatedUserResponse {
+  created: boolean
+  id: number
 }

@@ -14,6 +14,7 @@ import {
   iValidateErrors,
   iUserUpdateResponse,
   iUserDeletedResponse,
+  iCreatedUserResponse,
 } from '../interfaces'
 
 export class UsersController {
@@ -54,7 +55,7 @@ export class UsersController {
   /**
    * Endpoint to Create new User
    */
-  async create(req: Request<null, null, iUserAddSchema>, res: Response): Promise<Response<iUserSchema | iValidateErrors | iAuthResponse>> {
+  async create(req: Request<null, null, iUserAddSchema>, res: Response): Promise<Response<iUserSchema | iValidateErrors | iAuthResponse | iCreatedUserResponse>> {
     const auth = new Authentication()
 
     if (!auth.userHasPermission(req.headers.authorization, ['admin', 'root'])) {
@@ -67,7 +68,15 @@ export class UsersController {
 
     const exists = await UserModel.checkExist(req.body.email)
 
-    if (exists === null) return res.json(await UserModel.create(req.body))
+    const response = await UserModel.create(req.body)
+
+    if (exists === null && response){
+      return res.json({
+        created: true,
+        id: response,
+      })
+    }
+      
 
     return res.json({
       errors: ['this user aready exists'],

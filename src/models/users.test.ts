@@ -5,7 +5,7 @@ import { UserModel } from './'
 import { ModelCtor } from 'sequelize'
 import { Database } from '../bussiness'
 import { stubInterface } from 'ts-sinon'
-import { iUserSchema, iUserTypeSchema } from '../interfaces'
+import { iCreatedUserResponse, iUserSchema, iUserTypeSchema } from '../interfaces'
 import { CryptoHelper } from '../helpers'
 
 describe('src/models/users.ts', () => {
@@ -35,7 +35,7 @@ describe('src/models/users.ts', () => {
 
       UsersMock.findOne.callsFake(() => Promise.resolve(null))
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      UsersMock.create.callsFake((): any => Promise.resolve({ id: 1 }))
+      UsersMock.create.callsFake((): any => Promise.resolve({ created: true, id: 1 }))
       UsersMock.findAll.callsFake(() => Promise.resolve([]))
 
       const dbMock = stub(Database, 'initialize').callsFake(() => {
@@ -62,7 +62,7 @@ describe('src/models/users.ts', () => {
         }
       })
 
-      const res = await UserModel.create({
+      const resId = await UserModel.create({
         name: 'Eder',
         typeId: 1,
         email: 'eder@teste.com',
@@ -71,7 +71,8 @@ describe('src/models/users.ts', () => {
         passwordSalt: '123',
       })
 
-      expect(res).to.equal(true)
+      expect(resId).to.equal(1)
+
       assert.called(cryptoHelperMock.getPasswordHash)
       assert.called(UsersMock.create)
 

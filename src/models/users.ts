@@ -48,7 +48,7 @@ export class UserModel {
     deleted: DataTypes.BOOLEAN,
   }
 
-  static async create(user: iUserAddSchema): Promise<boolean> {
+  static async create(user: iUserAddSchema): Promise<boolean | number> {
     try {
       const pass = CryptoHelper.getPasswordHash(user.password)
 
@@ -57,7 +57,7 @@ export class UserModel {
 
       const result = await Database.tables.Users.create(user)
 
-      if (result.id) return true
+      if (result.id) return result.id
     } catch (error) {
       LOG.error(error)
       return false
