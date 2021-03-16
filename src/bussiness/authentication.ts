@@ -59,6 +59,7 @@ export class Authentication {
   validateAccess(token: string): iAccessTokenDecoded | false {
     try {
       // i use any here because there is an issue with jwt.verify return type https://github.com/auth0/node-jsonwebtoken/issues/483
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const decoded: any = jwt.verify(token.replace('Bearer ', ''), this.env.JWT_SECRET)
 
       return {
