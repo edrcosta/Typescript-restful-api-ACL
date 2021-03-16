@@ -70,13 +70,12 @@ export class UsersController {
 
     const response = await UserModel.create(req.body)
 
-    if (exists === null && response){
+    if (exists === null && response) {
       return res.json({
         created: true,
         id: response,
       })
     }
-      
 
     return res.json({
       errors: ['this user aready exists'],

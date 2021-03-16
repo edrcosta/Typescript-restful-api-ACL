@@ -5,7 +5,7 @@ import { UserModel } from './'
 import { ModelCtor } from 'sequelize'
 import { Database } from '../bussiness'
 import { stubInterface } from 'ts-sinon'
-import { iCreatedUserResponse, iUserSchema, iUserTypeSchema } from '../interfaces'
+import { iUserSchema, iUserTypeSchema } from '../interfaces'
 import { CryptoHelper } from '../helpers'
 
 describe('src/models/users.ts', () => {

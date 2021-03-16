@@ -1,5 +1,3 @@
-import { iUserSchema } from '../models/users'
-
 export interface iUserListQuery {
   page: number
 }
