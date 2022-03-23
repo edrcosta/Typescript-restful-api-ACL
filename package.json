@@ -4,14 +4,15 @@
   "description": "Backend test",
   "main": "dist/start.js",
   "scripts": {
-    "test": "npx mocha -r ts-node/register src/**/*.test.ts",
+    "test": "npx nyc --reporter=json-summary mocha -r ts-node/register src/**/*.test.ts",
     "coverage": "npx nyc mocha -r ts-node/register src/**/*.test.ts",
     "start": "npx tsc && node dist/start.js",
     "build-watch": "npx tsc -w",
     "build": "npx tsc",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix",
-    "migrate": "cd migrations && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+    "migrate": "cd migrations && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "coverage:badge": "npx coverage-badge-creator"
   },
   "author": "Eder Costa",
   "license": "ISC",

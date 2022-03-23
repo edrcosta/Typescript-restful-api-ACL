@@ -1,52 +1,52 @@
-# Desafio Backend
+# Backend Challenge
 
-Olá, gostaríamos de dizer que estamos felizes pelo seu interesse em nossa vaga e lhe convidar a participar do nosso desafio técnico. 😁
+Hello, our challenge to say that we are happy for our vacancy and invite you to participate in the technician. 😁
 
-O que avaliamos:
+What we provide:
 
-- Seu código
-- Organização
-- Boas práticas
+- Your code
+- Organization
+- Good habits
 
-### Desafio
+### Challenge
 
-Para este teste, você vai criar uma API REST que possibilite um cadastro de usuários e login, com as seguintes funcões:
+For this test, you will create a REST API that allows users to register and login, with the following functions:
 
-**Usuários**
-- Cadastrar um novo usuário
-- Listar informações de um usuário
-- Alterar o nome e tipo de um usuário
-- Excluir um usuário
-- Alterar o status de um usuário(ativo e inativo)
+**Users**
+- Register a new user
+- List a user's information
+- Change a user's name and type
+- Delete a user
+- Change a user's status (active and inactive)
 
-**Tipos**
-- Listar todos os tipos cadastrados
+**Tips**
+- List all registered types
 
-### Regras de negócio
-- A tabela de usuários deve conter os campos nome, senha, tipo, email e status.
-- A tabela de tipos deve a descrição do tipo.
-- Um usuário tem apenas um único tipo
-- Apenas usuários do tipo root e admin podem cadastrar novos usuários.
-- Apenas usuários do tipo root admin podem alterar qualquer informação do usuário(inclusive status);
-- Apenas usuários root podem excluir usuários
-- Usuários do tipo geral só tem acesso a listar informações de seu próprio usuário, bem como alterar suas próprias informações.
-- O login deve ser feito com email e senha.
+### Business rules
+- The users table must contain the field names, password, type, email and status.
+- A type table must have a description of the type.
+- A user has only a single type
+- Only root and admin users can register new users.
+- Only root admin users can change any user information (including status);
+- Only root users can delete users
+- General type users only have access to a list of user information, as well as changing their own information.
+- Login must be done with email and password.
 
-## Requisitos
-- O projeto deve ser documentado, principalmente a arquitetura utilizada e as rotas para cada tarefa.
-- O projeto deve ser construído com Typescript
-- O projeto deve ter uma cobertura considerável de testes unitários
+##Requirements
+- The project must be documented, mainly the architecture used and the routes for each task.
+- The project must be built with Typescript
+- The project must have unit test coverage
 
-### 🚫 O que não pode? (por favor 🙏😂)
+### 🚫 What can't? (please 🙏😂)
 
-- usar eslint-disable em qualquer lugar
-- usar tipagem any (sem preguiça!)
-- deixar qualquer warning ou erros no console do servidor 
-- deixar erros do eslint
-- códigos comentados
+- use eslint-disable anywhere
+- use any typing (no laziness!)
+- leave any warning or error on the server console
+- leave eslint errors
+- commented codes
 - console logs
-- fazer apenas 1 commit com todo código
+- make only 1 commit with all code
 
-### Ao final:
+### At end:
 
-Ao terminar, você deve fornecer acesso ao repositório (se o repositório for privado, dar permissão de acesso para @torreslucas13), bem como sinalizar à pessoa que está mantendo o contato com você durante o processo notificando a finalização do teste.
+By, you must provide private access to test3.
