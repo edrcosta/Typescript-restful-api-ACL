@@ -2,7 +2,16 @@
 
 Typescritp Restfull API
 
-[Descrição do teste](test-description.md)
+[![TypeScript](https://badges.frapsoft.com/typescript/love/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
+![](https://img.shields.io/badge/Coverage-49%25-F2E96B.svg?prefix=$lines$)
+
+**This is an typescritp interview test**
+
+[Application / Test description](test-description.md)
+
+
+
+
 
 ## Dependencies 
 
